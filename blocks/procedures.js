@@ -669,7 +669,9 @@ Blockly.Blocks['procedures_callnoreturn'] = {
       // an empty definition block with the correct signature.
       var name = this.getProcedureCall();
       var def = Blockly.Procedures.getDefinition(name, this.workspace);
-      if (def && (def.type != this.defType_ ||
+
+      // XXX Dropping that check for now.
+      if (def && (// def.type != this.defType_ ||
           JSON.stringify(def.arguments_) != JSON.stringify(this.arguments_))) {
         // The signatures don't match.
         def = null;
