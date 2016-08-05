@@ -186,27 +186,32 @@ Blockly.Procedures.flyoutCategory = function(workspace) {
     xmlList[xmlList.length - 1].setAttribute('gap', 24);
   }
 
+  // <block type="procedures_callnoreturn" gap="16">
+  //   <mutation name="do something">
+  //     <arg name="x"></arg>
+  //   </mutation>
+  // </block>
+  function generateCallBlock(name, args, templateName) {
+    var block = goog.dom.createDom('block');
+    block.setAttribute('type', templateName);
+    block.setAttribute('gap', 16);
+    var mutation = goog.dom.createDom('mutation');
+    mutation.setAttribute('name', name);
+    block.appendChild(mutation);
+    for (var j = 0; j < args.length; j++) {
+      var arg = goog.dom.createDom('arg');
+      arg.setAttribute('name', args[j]);
+      mutation.appendChild(arg);
+    }
+    return block;
+  }
+
   function populateProcedures(procedureList, templateName) {
     for (var i = 0; i < procedureList.length; i++) {
       var name = procedureList[i][0];
       var args = procedureList[i][1];
-      // <block type="procedures_callnoreturn" gap="16">
-      //   <mutation name="do something">
-      //     <arg name="x"></arg>
-      //   </mutation>
-      // </block>
-      var block = goog.dom.createDom('block');
-      block.setAttribute('type', templateName);
-      block.setAttribute('gap', 16);
-      var mutation = goog.dom.createDom('mutation');
-      mutation.setAttribute('name', name);
-      block.appendChild(mutation);
-      for (var j = 0; j < args.length; j++) {
-        var arg = goog.dom.createDom('arg');
-        arg.setAttribute('name', args[j]);
-        mutation.appendChild(arg);
-      }
-      xmlList.push(block);
+
+      xmlList.push(generateCallBlock(name, args, templateName));
     }
   }
 
